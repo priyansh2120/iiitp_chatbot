@@ -1,6 +1,6 @@
 # College Q&A Chatbot
 
-This project is a Q&A chatbot designed to answer questions related to **Indian Institute of Information Technology, Pune (IIIT Pune)** using a combination of large language models (LLMs), Text-Embeddings, Retrieval-Augmented Generation (RAG), and Prompt Engineering Techniques. The chatbot can process both text and audio inputs, providing relevant answers based on the conversation history and preloaded documents.
+This project is a Q&A chatbot designed to answer questions related to **Indian Institute of Information Technology, Pune (IIIT Pune)** using a combination of large language models (LLMs), Text-Embeddings, Retrieval-Augmented Generation (RAG), and Prompt Engineering Techniques, as a final year non internship semester project. The chatbot can process both text and audio inputs, providing relevant answers based on the conversation history and preloaded documents.
 
 ## Features
 
