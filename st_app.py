@@ -39,10 +39,10 @@ def load_data():
     with open(data_txt_fl, 'rb') as f:
         lines = f.readlines()
 
-    gat_data = ''.join([line.decode('utf-8').replace('\r\n', '\n') for line in lines])
+    iiitp_data = ''.join([line.decode('utf-8').replace('\r\n', '\n') for line in lines])
     with open(embeddings_fl, 'rb') as f:
         data_embeddings = pkl_load(f)
-    return gat_data.split('\n\n'), data_embeddings    
+    return iiitp_data.split('\n\n'), data_embeddings    
 
 def fetch_relevant_paragraphs(query, data_embeddings, top_k=2):
 
@@ -152,9 +152,9 @@ for message in st.session_state.messages:
         st.markdown(msg_txt)        
 
 with open("translated_data.json", "r", encoding="utf-8") as f:
-    gat_data_lst = json.load(f)
+    iiitp_data_lst = json.load(f)
 
-with open("gat_embeddings.pkl", "rb") as f:
+with open("iiitp_embeddings.pkl", "rb") as f:
     data_embeddings = pkl_load(f)
 if len(st.session_state.messages) >= max_convs:
     st.warning("You have reached the maximum number of messages. Please clear the chat window to continue.")
@@ -194,18 +194,18 @@ with st.chat_message("assistant"):
             st.stop()
 
     chat.history = []
-    assert len(gat_data_lst) == len(data_embeddings), "Mismatch between data and embeddings length!"
+    assert len(iiitp_data_lst) == len(data_embeddings), "Mismatch between data and embeddings length!"
     top_idx = fetch_relevant_paragraphs(query, data_embeddings, search_depth)
-    valid_indices = [idx for idx in top_idx if idx < len(gat_data_lst)]
+    valid_indices = [idx for idx in top_idx if idx < len(iiitp_data_lst)]
     if not valid_indices:
         st.warning("No relevant paragraphs found within bounds. Please try another question.")
         st.stop()
 
     # Combine content for relevant paragraphs
-    combined_para = "\n\n".join([gat_data_lst[idx]["content"] for idx in valid_indices if "content" in gat_data_lst[idx]])
+    combined_para = "\n\n".join([iiitp_data_lst[idx]["content"] for idx in valid_indices if "content" in iiitp_data_lst[idx]])
 
     # Display feedback message and use combined_para in the prompt
-    message_placeholder.markdown(f"Searching in {[gat_data_lst[idx]['title'] for idx in top_idx if 'title' in gat_data_lst[idx]]} webpages...")
+    message_placeholder.markdown(f"Searching in {[iiitp_data_lst[idx]['title'] for idx in top_idx if 'title' in iiitp_data_lst[idx]]} webpages...")
     prompt = prompt_augmentation(query, combined_para)
 
     # without streaming
